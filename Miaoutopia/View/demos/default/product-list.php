@@ -478,7 +478,7 @@ $list = $productC->listProduct();
                                     <div class="dropdown-menu dropdown-menu-end">
                             
                                         <a  href="deleteProduct.php?id=<?php echo $product['id'];?>" class="dropdown-item text-danger"  >delete</a>
-                                        <a  href="settings2.php?id=<?php echo $product['id'];?>" class="dropdown-item"  >edit</a>
+                                        <a  href="settings2.php?id=<?php echo $product['id'];?>" class="dropdown-item"  >update</a>
 
                                        
                         <input type="hidden" value=<?PHP echo $product['id']; ?> name="id">

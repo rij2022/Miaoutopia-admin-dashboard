@@ -446,7 +446,7 @@ $product = $productC->showProduct($_GET['id']);
                     <!--<div class="row g-4 mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Pick a date</label>
-                        <input type="date" name="daterangepicker" class="form-control" name="date_demande" value="<?php echo $product['date']?>">
+                        <input type="date" name="daterangepicker" class="form-control" name="date_demande" value=" echo $product['date']?>">
                     </div>
                     </div>-->
    

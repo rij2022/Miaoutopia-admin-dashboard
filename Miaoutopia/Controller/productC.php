@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\Miaoutopia\config.php';
+include_once 'C:\xampp\htdocs\Miaoutopia\config.php';
 include 'C:\xampp\htdocs\Miaoutopia\Model\product.php';
 
 class ProductC

@@ -5,6 +5,7 @@ class orders
     private ?string $product_id = null;
     private ?int $total_amount = null;
     private ?int $quantite = null;
+    private ?string $name = null ;
     private ?string $status=null;
     private ?DateTime $order_date = null;
 

@@ -4,17 +4,33 @@ include 'C:\xampp\htdocs\Miaoutopia\Model\orders.php';
 
 class OrdersC
 {
+    public $db ;
     public function listorders()
     {
         $sql = "SELECT * FROM orders";
-        $db = config::getConnexion();
+        $this->db = config::getConnexion();
         try {
-            $liste = $db->query($sql);
+            $liste = $this->db->query($sql);
             return $liste;
         } catch (Exception $e) {
             die('Error:' . $e->getMessage());
         }
     }
+
+
+    function getproductName($id){
+        $sql = "SELECT name FROM product WHERE $id ;";
+            try {
+                $query = $this->db->prepare($sql);
+                $orders = $query->execute(); 
+                $orders= $query->fetch();
+
+                return $orders['name'];
+            } catch (Exception $e) {
+                die('Error: ' . $e->getMessage());
+            }
+    }
+   
 
     function deleteorders($id)
     {
@@ -76,19 +92,24 @@ class OrdersC
 
     function showorders($id)
     {
-        $sql = "SELECT * from orders where id-order = $id";
+        $sql = "SELECT * FROM orders WHERE $id";
+        
         $db = config::getConnexion();
+        $query = $db->prepare($sql);
+        
         try {
-            $query = $db->prepare($sql);
-            $query->execute();
 
+            $orders = $query->execute(); 
             $orders= $query->fetch();
+
             return $orders;
         } catch (Exception $e) {
             die('Error: ' . $e->getMessage());
         }
     }
+    
+   
+    
 }
-
 
 ?>

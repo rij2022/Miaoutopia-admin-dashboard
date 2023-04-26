@@ -1,24 +1,20 @@
 <?php
-
 include 'C:\xampp\htdocs\Miaoutopia\Controller\ordersC.php';
-
-
-
-$ordersC = new OrdersC();
-$list = $ordersC->listorders();
+$ordersC = new ordersC();
+$orders = $ordersC->showorders($_GET['id-order']);
 ?>
 <!doctype html>
 <html lang="en">
 
-<!-- Mirrored from vetra.laborasyon.com/demos/default/orders.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Mar 2023 20:44:13 GMT -->
+<!-- Mirrored from vetra.laborasyon.com/demos/default/order-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Mar 2023 20:44:14 GMT -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Orders - Miaoutopia </title>
+    <title> Order Detail - Vetra | E-Commerce HTML Admin Dashboard Template </title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.png"/>
+    <link rel="shortcut icon" href="../../assets/images/favicon.png"/>
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com/">
@@ -40,11 +36,11 @@ $list = $ordersC->listorders();
 </head>
 <body>
 
-<!-- preloader-->
+<!-- preloader 
 <div class="preloader">
     <img src="logo.svg" alt="logo">
     <div class="preloader-icon"></div>
-</div> 
+</div>-->
 <!-- ./ preloader -->
 
 <!-- sidebars -->
@@ -587,10 +583,10 @@ $list = $ordersC->listorders();
                 </a>
                 <ul>
                     <li>
-                        <a  class="active"  href="orders.php">List</a>
+                        <a  href="orders.php">List</a>
                     </li>
                     <li>
-                        <a  href="order-detail.php">Detail</a>
+                        <a  class="active"  href="order-detail.php">Detail</a>
                     </li>
                 </ul>
             </li>
@@ -604,11 +600,7 @@ $list = $ordersC->listorders();
                 <ul>
                     <li>
                         <a  href="product-list.php">List
-                            View</a>
-                    </li>
-                   
-                    <li>
-                        <a  href="product-detail.php">Product Detail</a>
+                            product</a>
                     </li>
                     
                     <li>
@@ -616,10 +608,7 @@ $list = $ordersC->listorders();
                     </li>
                 </ul>
             </li>
-           
-          
-            
-        </ul>
+    
     </div>
 </div>
 <!-- ./  menu -->
@@ -639,7 +628,7 @@ $list = $ordersC->listorders();
         <img width="100" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
     </a>
     <!-- ./ Logo -->
-    <div class="page-title">Orders</div>
+    <div class="page-title">Order Detail</div>
     <form class="search-form">
         <div class="input-group">
             <button class="btn btn-outline-light" type="button" id="button-addon1">
@@ -759,107 +748,26 @@ $list = $ordersC->listorders();
                         <i class="bi bi-globe2 small me-2"></i> Dashboard
                     </a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Orders</li>
+                <li class="breadcrumb-item active" aria-current="page">Order Detail</li>
             </ol>
         </nav>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <div class="d-md-flex gap-4 align-items-center">
-                <div class="d-none d-md-flex">All Orders</div>
-                <div class="d-md-flex gap-4 align-items-center">
-                    <form class="mb-3 mb-md-0">
-                        <div class="row g-3">
-                            <div class="col-md-3">
-                                <select class="form-select">
-                                    <option>Sort by</option>
-                                    <option value="desc">Desc</option>
-                                    <option value="asc">Asc</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <select class="form-select">
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                    <button class="btn btn-outline-light" type="button">
-                                        <i class="bi bi-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="dropdown ms-auto">
-                    <a href="#" data-bs-toggle="dropdown"
-                       class="btn btn-primary dropdown-toggle"
-                       aria-haspopup="true" aria-expanded="false">Actions</a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a href="#" class="dropdown-item">Action</a>
-                        <a href="#" class="dropdown-item">Another action</a>
-                        <a href="#" class="dropdown-item">Something else here</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="table-responsive" style="height: 1000px;">
-        <table class="table table-custom table-lg mb-0" id="orders">
-            <thead>
-            <tr>
-                <th>
-                    <input class="form-check-input select-all" type="checkbox" data-select-all-target="#orders"
-                           id="defaultCheck1">
-                </th>
-                <th>ID</th>
-                <th>product name</th>
-                <th>Total</th>
-                <th>Date</th>
-                <th>quantite</th>
-                <th>Status</th>
-                <th class="text-end">Actions</th>
-            </tr>
-            </thead>
-         
-            <tbody>
-            <?php
-                    foreach ($list as $orders) {
-                        $p_id=$orders['product-id'];
-                       // var_dump($ordersC->getproductName($p_id)); 
-
-               
-                        ?>
-            <tr>
-                <td>
-                    <input class="form-check-input" type="checkbox">
-                </td>
-                <td>
-                    <a href="#"><?= $orders['id-order']; ?></a>
-                </td>
-                <td><?= $ordersC->getproductName($p_id) ?></td>
-                
-                <td><?= $orders['total-amount']; ?></td>
-                <td><?= $orders['order-date']; ?></td>
-                <td><?= $orders['quantite']; ?></td>
-                <td>
-                    <span class="badge bg-primary test"><?= $orders['status']; ?></span>
-                    <script>
+    <div class="row">
+        <div class="col-lg-8 col-md-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="mb-5 d-flex align-items-center justify-content-between">
+                        <span>Order No : <a href="#"><h1><?php echo $orders['id-order']?></h1></a></span>
+                        <span class="badge bg-success test" ><?= $orders['status']; ?></span>
+                        <script>
                         // Get all elements with the class name "test"
 var elements = document.getElementsByClassName("test");
-
+console.log(elements)
 // Loop through each element
 for (var i = 0; i < elements.length; i++) {
   var element = elements[i];
-  
+  console.log(element.innerHTML)
   // Check the innerHTML of the element and set its background color accordingly
   if (element.innerHTML === "processing") {
     element.style.backgroundColor = "orange";
@@ -871,50 +779,166 @@ for (var i = 0; i < elements.length; i++) {
 }
 
                     </script>
-                </td>
-                <td class="text-end">
-                    <div class="d-flex">
-                        <div class="dropdown ms-auto">
-                            <a href="#" data-bs-toggle="dropdown"
-                               class="btn btn-floating"
-                               aria-haspopup="true" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="order-detail.php?id-order=<?php echo $orders['id-order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>" class="dropdown-item">Show</a>
-                                <a href="#" class="dropdown-item">Edit</a>
-                                <a href="#" class="dropdown-item">Delete</a>
+                    <?php  $p_id= $orders['product-id']; ?>
+                    </div>
+                    <div class="row mb-5 g-4">
+                        <div class="col-md-3 col-sm-6">
+                            <p class="fw-bold">Order Created at</p>
+                            <?= $orders['order-date']; ?>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <p class="fw-bold">Name</p>
+                            <?php  echo $_GET['name']?>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <p class="fw-bold">quantite</p>
+                            <?= $orders['quantite']; ?>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <p class="fw-bold">customer name</p>
+                   Amira la
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-body d-flex flex-column gap-3">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="mb-0">Delivery Address</h5>
+                                        <a href="#">Edit</a>
+                                    </div>
+                                    <div>Name: Home</div>
+                                    <div>Josephin Villa</div>
+                                    <div>81 Fulton Park, Brazil/Pedro Leopoldo</div>
+                                    <div>
+                                        <i class="bi bi-telephone me-2"></i> 408-963-7769
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-body d-flex flex-column gap-3">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="mb-0">Billing Address</h5>
+                                        <a href="#">Edit</a>
+                                    </div>
+                                    <div>Name: Workplace</div>
+                                    <div>Josephin Villa</div>
+                                    <div>29543 South Plaza, Canada/Sydney Mines</div>
+                                    <div>
+                                        <i class="bi bi-telephone me-2"></i> 484-948-8535
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </td>
-            </tr>
-            <?php
-                    }
-                    ?>
-           
-           
-            </tbody>
-        </table>
+                </div>
+            </div>
+            <div class="card widget">
+                <h5 class="card-header">Order Items</h5>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-custom mb-0">
+                            <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <a href="#">
+                                        <img src="../../assets/images/products/3.jpg" class="rounded" width="60" alt="...">
+                                    </a>
+                                </td>
+                                <td>Digital clock</td>
+                                <td>1</td>
+                                <td>$1.190,90</td>
+                                <td>$1.190,90</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#">
+                                        <img src="../../assets/images/products/4.jpg" class="rounded" width="60" alt="...">
+                                    </a>
+                                </td>
+                                <td>Toy car</td>
+                                <td>2</td>
+                                <td>$139,58</td>
+                                <td>$279,16</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#">
+                                        <img src="../../assets/images/products/5.jpg" class="rounded" width="60" alt="...">
+                                    </a>
+                                </td>
+                                <td>Sunglasses</td>
+                                <td>1</td>
+                                <td>$50,90</td>
+                                <td>$50,90</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 mt-4 mt-lg-0">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h6 class="card-title mb-4">Price</h6>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-4 text-end">price :</div>
+                        <div class="col-4">$1.520,96</div>
+                    </div>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-4 text-end">Shipping :</div>
+                        <div class="col-4">6dt</div>
+                    </div>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-4 text-end">Tax(15%) :</div>
+                        <div class="col-4">$273,77</div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-4 text-end">
+                            <strong>Total :</strong>
+                        </div>
+                        <div class="col-4">
+                            <strong>$1.794,73</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title mb-4">Invoice</h6>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-6 text-end">Invoice No :</div>
+                        <div class="col-6">
+                            <a href="#">#5355619</a>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-6 text-end">Seller GST :</div>
+                        <div class="col-6">12HY87072641Z0</div>
+                    </div>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-6 text-end">Purchase GST :</div>
+                        <div class="col-6">22HG9838964Z1</div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline-primary">Download PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <nav class="mt-4" style="height : 100vh" aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
 
     </div>
     <!-- ./ content -->
@@ -945,5 +969,5 @@ for (var i = 0; i < elements.length; i++) {
 <script src="../../dist/js/app.min.js"></script>
 </body>
 
-<!-- Mirrored from vetra.laborasyon.com/demos/default/orders.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Mar 2023 20:44:14 GMT -->
+<!-- Mirrored from vetra.laborasyon.com/demos/default/order-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Mar 2023 20:44:14 GMT -->
 </html>
