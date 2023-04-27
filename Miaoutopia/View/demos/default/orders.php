@@ -1,9 +1,6 @@
 <?php
 
 include 'C:\xampp\htdocs\Miaoutopia\Controller\ordersC.php';
-
-
-
 $ordersC = new OrdersC();
 $list = $ordersC->listorders();
 ?>
@@ -40,11 +37,11 @@ $list = $ordersC->listorders();
 </head>
 <body>
 
-<!-- preloader-->
+<!-- preloade
 <div class="preloader">
     <img src="logo.svg" alt="logo">
     <div class="preloader-icon"></div>
-</div> 
+</div> r-->
 <!-- ./ preloader -->
 
 <!-- sidebars -->
@@ -833,7 +830,7 @@ $list = $ordersC->listorders();
             <tbody>
             <?php
                     foreach ($list as $orders) {
-                        $p_id=$orders['product-id'];
+                        $p_id=$orders['product_id'];
                        // var_dump($ordersC->getproductName($p_id)); 
 
                
@@ -843,7 +840,7 @@ $list = $ordersC->listorders();
                     <input class="form-check-input" type="checkbox">
                 </td>
                 <td>
-                    <a href="#"><?= $orders['id-order']; ?></a>
+                    <a href="#"><?= $orders['id_order']; ?></a>
                 </td>
                 <td><?= $ordersC->getproductName($p_id) ?></td>
                 
@@ -881,9 +878,10 @@ for (var i = 0; i < elements.length; i++) {
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="order-detail.php?id-order=<?php echo $orders['id-order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>" class="dropdown-item">Show</a>
-                                <a href="#" class="dropdown-item">Edit</a>
-                                <a href="#" class="dropdown-item">Delete</a>
+                                <a href="order-detail.php?id_order=<?php echo $orders['id_order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>&idp=<?php echo $orders['product_id'] ;?>" class="dropdown-item">Show</a>
+                                
+                                <a href="order-delete.php?id_order=<?php echo $orders['id_order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>&idp=<?php echo $orders['product_id'] ;?>" class="dropdown-item">Delete</a>
+                                <a href="order-update.php?id_order=<?php echo $orders['id_order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>&idp=<?php echo $orders['product_id'] ;?>"class="dropdown-item">update</a>
                             </div>
                         </div>
                     </div>

@@ -1,11 +1,10 @@
 <?php
-class orders
+class Orders
 {
     private ?int $id_orders= null;
     private ?string $product_id = null;
     private ?int $total_amount = null;
     private ?int $quantite = null;
-    private ?string $name = null ;
     private ?string $status=null;
     private ?DateTime $order_date = null;
 
@@ -30,8 +29,11 @@ class orders
     {
         return $this->quantite;
     }
-
-
+    public function gettotal()
+    {
+        return $this->total_amount;
+    }
+ 
     /**
      * Get the value of product_id
      */
@@ -67,6 +69,13 @@ class orders
 
    
     }
+    public function settotal($total_amount)
+    {
+        $this->total_amount = $total_amount;
+
+   
+    }
+
 
 
  

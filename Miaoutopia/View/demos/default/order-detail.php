@@ -1,7 +1,9 @@
 <?php
-include 'C:\xampp\htdocs\Miaoutopia\Controller\ordersC.php';
+include 'C:/xampp/htdocs/Miaoutopia/Controller/ordersC.php';
 $ordersC = new ordersC();
-$orders = $ordersC->showorders($_GET['id-order']);
+
+$orders = $ordersC->showorders($_GET['id_order']);
+//$ordersC->gettotal();
 ?>
 <!doctype html>
 <html lang="en">
@@ -33,6 +35,7 @@ $orders = $ordersC->showorders($_GET['id-order']);
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="C:/xampp/htdocs/Miaoutopia/View/dist/js/totalPrice.js"></script>
 </head>
 <body>
 
@@ -758,8 +761,9 @@ $orders = $ordersC->showorders($_GET['id-order']);
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="mb-5 d-flex align-items-center justify-content-between">
-                        <span>Order No : <a href="#"><h1><?php echo $orders['id-order']?></h1></a></span>
+                        <span>Order No : <a href="#"># <?php echo $orders['id_order']?></a></span>
                         <span class="badge bg-success test" ><?= $orders['status']; ?></span>
+                        
                         <script>
                         // Get all elements with the class name "test"
 var elements = document.getElementsByClassName("test");
@@ -779,7 +783,7 @@ for (var i = 0; i < elements.length; i++) {
 }
 
                     </script>
-                    <?php  $p_id= $orders['product-id']; ?>
+                    <?php  $p_id= $orders['product_id']; ?>
                     </div>
                     <div class="row mb-5 g-4">
                         <div class="col-md-3 col-sm-6">
@@ -798,6 +802,8 @@ for (var i = 0; i < elements.length; i++) {
                             <p class="fw-bold">customer name</p>
                    Amira la
                         </div>
+                         <button class="btn btn-outline-primary" href="order-update.php?id_order=<?php echo $_GET['id_order'] ;?>&name=<?php $_GET['name'];?>&idp=<?php echo $_GET['idp'] ;?>" >update</button>     
+       
                     </div>
                     <div class="row g-4">
                         <div class="col-md-6 col-sm-12">
@@ -894,23 +900,28 @@ for (var i = 0; i < elements.length; i++) {
                 <div class="card-body">
                     <h6 class="card-title mb-4">Price</h6>
                     <div class="row justify-content-center mb-3">
-                        <div class="col-4 text-end">price :</div>
-                        <div class="col-4">$1.520,96</div>
+                        <div class="col-5 text-end">unit price :</div>
+                        <div class="col-5"><?php  echo $orders['total-amount']?>dt</div>
                     </div>
                     <div class="row justify-content-center mb-3">
-                        <div class="col-4 text-end">Shipping :</div>
-                        <div class="col-4">6dt</div>
+                        <div class="col-5 text-end">Quantity :</div>
+                        <div class="col-5"><?php $wt=$orders['total-amount']*$orders['quantite']; echo $orders['quantite']   ?></div>
                     </div>
                     <div class="row justify-content-center mb-3">
-                        <div class="col-4 text-end">Tax(15%) :</div>
-                        <div class="col-4">$273,77</div>
+                        <div class="col-5 text-end">Tax(19%) :</div>
+                        <div class="col-5"><?php $pt=$wt*1.19;echo $wt*0.19?>dt</div>
                     </div>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-5 text-end">Shipping :</div>
+                        <div class="col-5"><?php $kt=$pt+6; echo 6   ?>dt</div>
+                    </div>
+                 
                     <div class="row justify-content-center">
-                        <div class="col-4 text-end">
-                            <strong>Total :</strong>
+                        <div class="col-5 text-end">
+                            <strong class="total">Total :</strong>
                         </div>
-                        <div class="col-4">
-                            <strong>$1.794,73</strong>
+                        <div class="col-5">
+                            <strong><?php echo $kt?>dt</strong>
                         </div>
                     </div>
                 </div>
@@ -964,7 +975,7 @@ for (var i = 0; i < elements.length; i++) {
 
     <!-- Examples -->
     <script src="../../dist/js/examples/orders.js"></script>
-
+   <!-- <script src="C:/xampp/htdocs/Miaoutopia/View/dist/js/totalPrice.js"></script>-->
 <!-- Main Javascript file -->
 <script src="../../dist/js/app.min.js"></script>
 </body>

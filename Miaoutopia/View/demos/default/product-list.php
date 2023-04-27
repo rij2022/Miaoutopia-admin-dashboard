@@ -476,7 +476,7 @@ $list = $productC->listProduct();
                                         <i class="bi bi-three-dots"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
-                            
+                                    <a href="order-add.php?name=<?php echo  $product['name'];?>&idp=<?php echo $product['id'] ;?>"class="dropdown-item"  >add an order</a>
                                         <a  href="deleteProduct.php?id=<?php echo $product['id'];?>" class="dropdown-item text-danger"  >delete</a>
                                         <a  href="settings2.php?id=<?php echo $product['id'];?>" class="dropdown-item"  >update</a>
 

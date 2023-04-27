@@ -34,7 +34,7 @@ class OrdersC
 
     function deleteorders($id)
     {
-        $sql = "DELETE FROM orders WHERE id-orders = :id";
+        $sql = "DELETE FROM orders WHERE id_order = :id";
         $db = config::getConnexion();
         $req = $db->prepare($sql);
         $req->bindValue(':id', $id);
@@ -92,11 +92,11 @@ class OrdersC
 
     function showorders($id)
     {
-        $sql = "SELECT * FROM orders WHERE $id";
+        $sql = "SELECT * from orders where id_order = :id";
         
         $db = config::getConnexion();
         $query = $db->prepare($sql);
-        
+        $query->bindValue(':id', $id);
         try {
 
             $orders = $query->execute(); 
@@ -104,7 +104,7 @@ class OrdersC
 
             return $orders;
         } catch (Exception $e) {
-            die('Error: ' . $e->getMessage());
+die('Error: ' . $e->getMessage());
         }
     }
     
@@ -113,3 +113,4 @@ class OrdersC
 }
 
 ?>
+  
