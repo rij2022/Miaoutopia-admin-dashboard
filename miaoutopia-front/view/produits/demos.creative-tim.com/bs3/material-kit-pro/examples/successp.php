@@ -1,4 +1,8 @@
-
+<?php
+session_start();
+$_SESSION['cart'] = array();
+var_dump($_SESSION['cart']);
+ ?>
 <!doctype html>
 <html lang="en">
 

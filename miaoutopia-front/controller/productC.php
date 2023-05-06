@@ -10,6 +10,7 @@ class ProductC
         $db = config::getConnexion();
         try {
             $liste = $db->query($sql);
+            
             return $liste;
         } catch (Exception $e) {
             die('Error:' . $e->getMessage());
@@ -99,6 +100,7 @@ class ProductC
             $query->execute();
 
             $product= $query->fetch();
+          
             return $product;
         } catch (Exception $e) {
             die('Error: ' . $e->getMessage());

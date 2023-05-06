@@ -1,5 +1,5 @@
 <?php
-include 'C:/xampp/htdocs/Miaoutopia/Controller/productC.php';
+include '../../../../../../controller/productC.php';
 $productC = new productC();
 
 $product = $productC->showproduct($_GET['id']);
@@ -9,6 +9,7 @@ if(empty($_SESSION['cart'])){
 }
 array_push($_SESSION['cart'],$product['id']);
 var_dump($_SESSION['cart']);
+
 //$productC->gettotal();
 ?>
 <!doctype html>
