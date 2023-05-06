@@ -1,8 +1,13 @@
 <?php
-
 include 'C:\xampp\htdocs\Miaoutopia\Controller\ordersC.php';
 $ordersC = new OrdersC();
-$list = $ordersC->listorders();
+
+if (!empty($_GET['q'])) {
+    $searchTerm = $_GET['q'];
+    $list = $ordersC->chercherorder($searchTerm);
+} else {
+    $list= $ordersC->listorders();
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -530,10 +535,10 @@ $list = $ordersC->listorders();
 <!-- menu -->
 <div class="menu">
     <div class="menu-header">
-        <a href="index.html" class="menu-header-logo">
+        <a href="index.php" class="menu-header-logo">
             <img src="logo.svg" alt="logo">
         </a>
-        <a href="index.html" class="btn btn-sm menu-close-btn">
+        <a href="index.php" class="btn btn-sm menu-close-btn">
             <i class="bi bi-x"></i>
         </a>
     </div>
@@ -568,7 +573,7 @@ $list = $ordersC->listorders();
         <ul>
             <li class="menu-divider">E-Commerce</li>
             <li>
-                <a  href="index.html">
+                <a  href="index.php">
                     <span class="nav-link-icon">
                         <i class="bi bi-bar-chart"></i>
                     </span>
@@ -609,8 +614,24 @@ $list = $ordersC->listorders();
                     </li>
                     
                     <li>
-                        <a  href="checkout.php">Checkout</a>
+                        <a  href="product-add.php">add product</a>
                     </li>
+                </ul>
+            </li> <li>
+                <a href="todo-list.html">
+                    <span class="nav-link-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </span>
+                    <span>Todo App</span>
+                </a>
+                <ul>
+                    <li>
+                        <a  class="active"
+                            href="todo-list.html">
+                            <span>List</span>
+                        </a>
+                    </li>
+                  
                 </ul>
             </li>
            
@@ -632,22 +653,23 @@ $list = $ordersC->listorders();
         </a>
     </div>
     <!-- Logo -->
-    <a href="index.html" class="logo">
+    <a href="index.php" class="logo">
         <img width="100" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
     </a>
     <!-- ./ Logo -->
     <div class="page-title">Orders</div>
-    <form class="search-form">
+    <form class="search-form" method="GET">
         <div class="input-group">
-            <button class="btn btn-outline-light" type="button" id="button-addon1">
+            <button class="btn btn-outline-light" type="submit" id="button-addon1"  >
                 <i class="bi bi-search"></i>
-            </button>
-            <input type="text" class="form-control" placeholder="Search..."
+</button>
+<input type="text" class="form-control" placeholder="Search..." name="q"
                    aria-label="Example text with button addon" aria-describedby="button-addon1">
             <a href="#" class="btn btn-outline-light close-header-search-bar">
                 <i class="bi bi-x"></i>
             </a>
         </div>
+    </form>
     </form>
     <div class="header-bar ms-auto">
         <ul class="navbar-nav justify-content-end">
@@ -831,7 +853,7 @@ $list = $ordersC->listorders();
             <?php
                     foreach ($list as $orders) {
                         $p_id=$orders['product_id'];
-                       // var_dump($ordersC->getproductName($p_id)); 
+                        //var_dump($orders['product_id']); 
 
                
                         ?>
@@ -844,8 +866,8 @@ $list = $ordersC->listorders();
                 </td>
                 <td><?= $ordersC->getproductName($p_id) ?></td>
                 
-                <td><?= $orders['total-amount']; ?></td>
-                <td><?= $orders['order-date']; ?></td>
+                <td><?= $orders['total_amount']; ?></td>
+                <td><?= $orders['order_date']; ?></td>
                 <td><?= $orders['quantite']; ?></td>
                 <td>
                     <span class="badge bg-primary test"><?= $orders['status']; ?></span>
@@ -880,8 +902,8 @@ for (var i = 0; i < elements.length; i++) {
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a href="order-detail.php?id_order=<?php echo $orders['id_order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>&idp=<?php echo $orders['product_id'] ;?>" class="dropdown-item">Show</a>
                                 
-                                <a href="order-delete.php?id_order=<?php echo $orders['id_order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>&idp=<?php echo $orders['product_id'] ;?>" class="dropdown-item">Delete</a>
-                                <a href="order-update.php?id_order=<?php echo $orders['id_order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>&idp=<?php echo $orders['product_id'] ;?>"class="dropdown-item">update</a>
+                                <a href="deleteOrder.php?id_order=<?php echo $orders['id_order'] ;?>" class="dropdown-item">Delete</a>
+                                <a href="orderupdate-form.php?id_order=<?php echo $orders['id_order'] ;?>&name=<?php echo $ordersC->getproductName($p_id);?>&idp=<?php echo $orders['product_id'] ;?>"class="dropdown-item">update</a>
                             </div>
                         </div>
                     </div>

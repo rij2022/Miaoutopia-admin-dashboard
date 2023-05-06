@@ -1,8 +1,14 @@
 
 <?php
-include 'C:\xampp\htdocs\Miaoutopia\Controller\productC.php';
+include 'C:/xampp/htdocs/Miaoutopia/Controller/productC.php';
 $productC = new ProductC();
-$list = $productC->listProduct();
+
+if (!empty($_GET['q'])) {
+    $searchTerm = $_GET['q'];
+    $list = $productC->chercherproduct($searchTerm);
+} else {
+    $list= $productC->listProduct();
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -231,10 +237,10 @@ $list = $productC->listProduct();
 <!-- menu -->
 <div class="menu">
     <div class="menu-header">
-        <a href="index.html" class="menu-header-logo">
+        <a href="index.php" class="menu-header-logo">
             <img src="logo.svg" alt="logo">
         </a>
-        <a href="index.html" class="btn btn-sm menu-close-btn">
+        <a href="index.php" class="btn btn-sm menu-close-btn">
             <i class="bi bi-x"></i>
         </a>
     </div>
@@ -269,7 +275,7 @@ $list = $productC->listProduct();
         <ul>
             <li class="menu-divider">E-Commerce</li>
             <li>
-                <a  href="index.html">
+                <a  href="index.php">
                     <span class="nav-link-icon">
                         <i class="bi bi-bar-chart"></i>
                     </span>
@@ -307,8 +313,25 @@ $list = $productC->listProduct();
                 
                     <li>
                         <a  class="active"
-                            href="checkout.php">Add product</a>
+                            href="product-add.php">Add product</a>
                     </li>
+                </ul>
+            </li>
+            <li>
+                <a href="todo-list.html">
+                    <span class="nav-link-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </span>
+                    <span>Todo App</span>
+                </a>
+                <ul>
+                    <li>
+                        <a  class="active"
+                            href="todo-list.html">
+                            <span>List</span>
+                        </a>
+                    </li>
+                  
                 </ul>
             </li>
             </ul>
@@ -328,17 +351,17 @@ $list = $productC->listProduct();
         </a>
     </div>
     <!-- Logo -->
-    <a href="index.html" class="logo">
+    <a href="index.php" class="logo">
         <img width="100" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
     </a>
     <!-- ./ Logo -->
     <div class="page-title">Products</div>
-    <form class="search-form">
+    <form class="search-form" method="GET">
         <div class="input-group">
-            <button class="btn btn-outline-light" type="button" id="button-addon1">
+            <button class="btn btn-outline-light" type="submit" id="button-addon1"  >
                 <i class="bi bi-search"></i>
-            </button>
-            <input type="text" class="form-control" placeholder="Search..."
+</button>
+<input type="text" class="form-control" placeholder="Search..." name="q"
                    aria-label="Example text with button addon" aria-describedby="button-addon1">
             <a href="#" class="btn btn-outline-light close-header-search-bar">
                 <i class="bi bi-x"></i>
@@ -350,7 +373,7 @@ $list = $productC->listProduct();
           
            
             <li class="nav-item ms-3">
-            <a href="checkout.php" target="_parent"> <button  class="btn btn-primary btn-icon" >
+            <a href="product-add.php" target="_parent"> <button  class="btn btn-primary btn-icon" >
         <i class="bi bi-plus-circle"></i> Add Product
     </button></a>
             </li>
@@ -361,7 +384,7 @@ $list = $productC->listProduct();
         <a href="#" class="search-bar-btn">
             <i class="bi bi-search"></i>
         </a>
-        <a href="#" class="actions-btn">
+        <a href="list-produit.php" class="view all">
             <i class="bi bi-three-dots"></i>
         </a>
     </div>
@@ -397,7 +420,7 @@ $list = $productC->listProduct();
                                     <div class="col-md-6">
                                         <select class="form-select">
                                             <option>Sort by</option>
-                                            <option value="desc">Desc</option>
+                                            <option value="desc" href="sortP-desc.php" >Desc</option>
                                             <option value="asc">Asc</option>
                                         </select>
                                     </div>
@@ -418,9 +441,9 @@ $list = $productC->listProduct();
                                class="btn btn-primary dropdown-toggle"
                                aria-haspopup="true" aria-expanded="false">Actions</a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Action</a>
-                                <a href="#" class="dropdown-item">Another action</a>
-                                <a href="#" class="dropdown-item">Something else here</a>
+                                <a href="sortP-desc.php" class="dropdown-item"> sort date desc</a>
+                                <a href="sortP-asc.php" class="dropdown-item"> sort date asc  </a>
+                                <a href="product-list.php" class="dropdown-item">View all</a>
                             </div>
                         </div>
                     </div>
@@ -476,9 +499,9 @@ $list = $productC->listProduct();
                                         <i class="bi bi-three-dots"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="order-add.php?name=<?php echo  $product['name'];?>&idp=<?php echo $product['id'] ;?>"class="dropdown-item"  >add an order</a>
+                                    <a href="order-add.php?name=<?php echo $product['name'];?>&idp=<?php echo $product['id'] ;?>&price=<?php echo $product['price'] ;?>" class="dropdown-item"  >add an order</a>
                                         <a  href="deleteProduct.php?id=<?php echo $product['id'];?>" class="dropdown-item text-danger"  >delete</a>
-                                        <a  href="settings2.php?id=<?php echo $product['id'];?>" class="dropdown-item"  >update</a>
+                                        <a  href="product-update.php?id=<?php echo $product['id'];?>" class="dropdown-item"  >update</a>
 
                                        
                         <input type="hidden" value=<?PHP echo $product['id']; ?> name="id">

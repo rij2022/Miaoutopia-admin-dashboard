@@ -6,7 +6,7 @@ class Orders
     private ?int $total_amount = null;
     private ?int $quantite = null;
     private ?string $status=null;
-    private ?DateTime $order_date = null;
+    private ?string $order_date = null;
 
     public function __construct($id_orders = null, $n=null, $a, $d,$h,$q)
     {

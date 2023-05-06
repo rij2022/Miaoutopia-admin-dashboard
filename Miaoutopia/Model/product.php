@@ -7,7 +7,7 @@ class product
     private ?int $price = null;
     private ?string $stock=null;
     private ?string $description=null;
-    private ?DateTime $date = null;
+    private ?string $date = null;
 
     public function __construct($id = null, $n, $p, $a, $d,$h,$e)
     {

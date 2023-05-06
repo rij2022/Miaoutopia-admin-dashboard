@@ -11,14 +11,17 @@ $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
 //if (isset($_POST['name'])  && isset($_POST['stock']) && isset($_POST['media_product']) && isset($_POST['price']))  // CAUSING ERROR
- {
- echo $_FILES['media_product']['tmp_name']; 
-  echo $_POST['stock']; 
+ 
+
+  echo $_POST['date_demande']; 
 	$name = $_POST['name']; //
   $description = $_POST['description'];
 	$stock = $_POST['stock']; //
-	$price = $_POST['price']; //
-
+	$price = $_POST['price'];
+   $date = $_POST['date_demande'];
+   $date1=strtotime($date);
+   var_dump($date1);
+   $d=date("Y-m-d",$date1);
   $allowTypes = array('jpg','png','jpeg','gif','pdf');
 
 
@@ -38,8 +41,8 @@ $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     $file = $_FILES['media_product'];
     $file_name = $_FILES["media_product"]["name"] ;
     
-    $date_demande = date('m/d/Y h:i:s a', time());
-}
+    
+
 
 include_once 'C:\xampp\htdocs\Miaoutopia\Model\product.php';
 $product = new product(null,null,null,null,null,null,null);
@@ -52,11 +55,12 @@ $product->setdescription($description);
 
 $product->setimg($file_name) ;
 if($stock===0){
-$product->setstock("out of stock") ;}else{
+$product->setstock("out of stock") ;}
+else{
   $product->setstock($stock);
 }
- 
-
+ var_dump($d);
+$product->setdate($d);
 $product->setid($id);
 var_dump($product);
 
@@ -65,40 +69,5 @@ header('Location:product-list.php');
 
 
 
-//
 
-// create Product
-//$product= null;
-
-// create an instance of the controller
-/*
-if ( isset($_POST['id'])&&
-    isset($_POST["img"]) &&
-    isset($_POST["name"]) &&
-    isset($_POST["price"]) &&
-    isset($_POST["stock"]) &&
-    isset($_POST["date"])
-) {
-    if (!empty($_POST['id'])&&
-        !empty($_POST['img']) &&
-        !empty($_POST["name"]) &&
-        !empty($_POST["price"]) &&
-        !empty($_POST["stock"]) &&
-        !empty($_POST["date"])
-    ) {
-        $product= new Product(
-            $_POST['id'],
-            $_POST['name'],
-            $_POST['img'],
-            $_POST['price'],
-            $_POST['stock'],
-            new DateTime($_POST['date'])
-        );
-        var_dump($product) ;
-        $productC->addProduct($product);
-    } else
-        $error = "Missing information";
-}
-
-*/
 ?>

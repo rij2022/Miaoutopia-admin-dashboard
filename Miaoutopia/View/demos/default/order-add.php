@@ -46,27 +46,36 @@
                                     <p class="text-muted">You can add your new order for </p><h2 class="display-8"><?php echo $_GET['name']?></h2>
                                 </div>
                                 <form class="mb-5 needs-validation " action="verificationadd.php" method="POST">
-                                <div class="mb-3">
-                                        <input type="text" class="form-control" name="idp"   value="<?php echo $_GET['idp']?> "  readonly>
-                                    </div>
+                               
                                 <div class="mb-3">
                                
     <label for="validationCustom04" class="form-label"></label>
-    <select class="form-select" id="validationCustom04" name="status" required>
-      <option selected disabled value="status">status</option>
-      <option>processing</option>
+    <select class="form-select needs-validation " id="validationCustom04" name="status"  required>
+      <option selected  value="status">processing</option>
       <option>shipped</option>
       <option>cancelled</option>
     </select>  </div>
      <div class="mb-3">
      <input type="number" class="form-control" placeholder="Enter the quantite" name="quantite"
-                                               required>
+                                            min="0"   required>
                 </div>
                 <div class="mb-3">
-     <input type="number" class="form-control" placeholder="Enter the price" name="total"
-                                               required>
+
+     <input type="number" class="form-control"  name="price" 
+                                             value="<?php echo intval($_GET['price']); ?>" hidden>
                 </div>
-    
+                <div class="mb-3">
+                
+                        <label class="form-label">Pick the date of delivery</label>
+                        <input type="date" class="form-control" name="date-demande" required>
+                    
+   
+                </div>
+                <div class="mb-3">
+     <input type="number" class="form-control"  name="idp" value="<?php echo $_GET['idp']?>"
+                                               hidden>
+                </div>
+                
     
   <script>// Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {

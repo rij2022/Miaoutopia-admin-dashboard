@@ -19,9 +19,11 @@ class OrdersC
 
 
     function getproductName($id){
-        $sql = "SELECT name FROM product WHERE $id ;";
+        $sql = "SELECT name FROM product WHERE  id = :id ;"; 
+          $query = $this->db->prepare($sql);
+                $query->bindValue(':id', $id);
             try {
-                $query = $this->db->prepare($sql);
+             ;
                 $orders = $query->execute(); 
                 $orders= $query->fetch();
 
@@ -49,7 +51,7 @@ class OrdersC
     function addorders($orders)
     {
         $sql = "INSERT INTO orders 
-        VALUES (NULL, :ln, :fn, :ad,CURDATE(), :q)";
+        VALUES (NULL, :ln, :fn, :ad, :d, :q)";
         $db = config::getConnexion();
         try {
             
@@ -58,7 +60,8 @@ class OrdersC
                 'ln' => $orders->getproduct_id(),
                  'fn' => $orders->gettotal_amount(),
                  'ad' => $orders->getstatus(),
-                'q'=>$orders->getquantite()
+                 'd'=>$orders->getorder_date(),
+                 'q'=>$orders->getquantite()
                 
             ]);
         } catch (Exception $e) {
@@ -67,20 +70,24 @@ class OrdersC
     }
 
     function updateorders($orders, $id)
-    {
+    {  $db = config::getConnexion();
+        $query = $db->prepare(
+            'UPDATE orders SET 
+                 total_amount = :total,
+                status= :status,
+                quantite= :quantite,
+                order_date = :date,
+                product_id= :idp
+            WHERE id_order= :id'
+        );
         try {
-            $db = config::getConnexion();
-            $query = $db->prepare(
-                'UPDATE orders SET 
-                     total-amount = :total,
-                    status= :status,
-                    quantite= :quantite
-                WHERE id-order= :id'
-            );
+          
             $query->execute([
                 'total' => $orders->gettotal_amount(),
                 'price' => $orders->getstatus(),
                 'quantite' => $orders->getquantite(),
+                'date'=>$orders->getorder_date(),
+                'idp'=>$orders->getproduct_id(),
                 'id'=>$id
                 //'date' => $orders->getdate()
             ]);
@@ -107,10 +114,22 @@ class OrdersC
 die('Error: ' . $e->getMessage());
         }
     }
-    
+    function chercherorder($searchTerm) {
+        $sql = "SELECT * FROM orders WHERE CONCAT_WS(' ', id_order, product_id, total_amount, status, order_date, quantite) LIKE :searchTerm ;";
+        $db = config::getConnexion();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':searchTerm', '%'.$searchTerm.'%', PDO::PARAM_STR);
+        try {
+ 
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $results;
+        } catch(PDOException $e) {
+            die('Error: ' . $e->getMessage());
+        }
    
     
 }
-
+}
 ?>
   
