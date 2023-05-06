@@ -1,7 +1,11 @@
 <?php
 session_start();
+
 $_SESSION['cart'] = array();
-var_dump($_SESSION['cart']);
+
+
+
+
  ?>
 <!doctype html>
 <html lang="en">
@@ -11,7 +15,7 @@ var_dump($_SESSION['cart']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Account Verified - Vetra | E-Commerce HTML Admin Dashboard Template</title>
+    <title>payment Verified - Miaoutopia | E-Commerce </title>
 
     <!-- Favicon -->
 
@@ -47,7 +51,7 @@ var_dump($_SESSION['cart']);
                                     <img width="120" src="../assets/img/productscat/favicon.png" alt="logo">
                                 </figure>
                                 <div class="display-8 mb-4">Congratulations 😉</div>
-                                <p class="mb-4">Your payment is receive . hope you enjoy the product.</p>
+                                <p class="mb-4">Your payment is received . hope you enjoy the product.</p>
                                 <div class="row my-5">
                                     <div class="col-3 m-auto">
                                         <img class="img-fluid" src="https://vetra.laborasyon.com/assets/svg/congratulations.svg" alt="...">

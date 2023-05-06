@@ -18,6 +18,6 @@
 
     if($charge){
       session_destroy();
-      header("Location:successp.php?amount=$amount");
+     // header("Location:successp.php?amount=$amount");
     }
 ?>

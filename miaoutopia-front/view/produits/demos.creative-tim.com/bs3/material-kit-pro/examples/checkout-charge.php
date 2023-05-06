@@ -1,5 +1,14 @@
 <?php
     include("./config.php");
+    include("C:/xampp/htdocs/miaoutopia-front/controller/ordersC.php");
+    $ProductIds =  json_decode($_POST['idTable']);
+    $ProductQuantities = json_decode($_POST['quantityTable']);
+
+    $ordersC = new OrdersC() ; 
+
+    $ordersC->addorders($ProductIds,$ProductQuantities,10) ;
+
+    
 
     $token = $_POST["stripeToken"];
     $contact_name = "name";

@@ -2,9 +2,15 @@
 include "C:/xampp/htdocs/miaoutopia-front/controller/productC.php";
 $productC = new productC();
 session_start();
+if(empty($_SESSION['cart'])){
+  $_SESSION['cart']=array();
+}
+array_push($_SESSION['cart'],$_GET['id']);
 $whereIN = implode(',', $_SESSION['cart']);
 $list = $productC->listcart($whereIN);
 $isOdd = true;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -182,7 +188,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="container">
 <div class="row title-row">
 <div class="col-md-4 col-md-offset-8">
-<button class="btn btn-white pull-right"><i class="material-icons">shopping_cart</i> 0 Items</button>
+<button class="btn btn-white pull-right"><i class="material-icons">shopping_cart</i>  <?php echo count($_SESSION['cart'])?> Items</button>
 </div>
 </div>
 </div>
@@ -206,6 +212,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li>Quantity</li>
       <li>Total</li>
       <li>Remove</li>
+      <script>
+        var idArrays = new Array();
+      </script>
     </ul>
     <ul class="cartWrap">
       <?php foreach($list as $product): ?>
@@ -217,6 +226,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
              <input style="display:none;" type="text" name="img" value="<?php echo $product['img'];?>">
               <p class="itemNumber"></p>
               <h3><?php echo $product['name']?></h3>
+              <script>
+                var id =parseFloat( "<?php echo $product['id'] ?>")
+                idArrays.push(id)
+              </script>
      <label >select quantity</label>
             <p> <input type="text" class="qty" placeholder="0"/></p> 
               <p class="unitPrice">  <?php echo $product['price']?></p>
@@ -266,17 +279,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <input style="display:none;" type="text" name="name" value="<?php echo $product['name'];?>">
 <input style="display:none;" type="number" name="finalPrice" id="pricebeforePay" value="13">
 <input style="display:none;" type="number" name="qt" id="qtbeforePay" value="0">
+<input style="display:none;" type="hidden" name="idTable" id="idTable">
+<input style="display:none;" type="hidden" name="quantityTable" id="quantityTable">
 
 <script defer>
   // Get all the quantity input elements on the page
   const qtyInputs = document.querySelectorAll('.qty');
   let priceShih =0
+  let QuantityArray= new Array(qtyInputs.length);
+  for (let i = 0 ; i<QuantityArray.length; i++)
+   QuantityArray[i] = 0
 
   // Loop through each quantity input
-  qtyInputs.forEach(qtyInput => {
+  qtyInputs.forEach((qtyInput,index) => {
     // Add an event listener for when the input value changes
     qtyInput.addEventListener('change', event => {
    
+    
 
       // Get the corresponding price element
       const priceElem = event.target.parentElement;
@@ -288,6 +307,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
      const newTotal =parseFloat(unitPrice) *qt;
      document.getElementById('qtbeforePay').value = qt
+
+     QuantityArray[index] = qt ;
+     console.log(QuantityArray) ;
+     console.log(idArrays) ;
+
+ 
+     var idJson = JSON.stringify(idArrays) ;
+     var quantityJson = JSON.stringify(QuantityArray) ;
+
+     console.log(quantityJson) ;
+     console.log(idJson) ;
+     
+     document.getElementById('quantityTable').value = quantityJson;
+     document.getElementById('idTable').value = idJson;
+
 
 
 

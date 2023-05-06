@@ -7,8 +7,8 @@ session_start();
 if(empty($_SESSION['cart'])){
   $_SESSION['cart']=array();
 }
-array_push($_SESSION['cart'],$product['id']);
-var_dump($_SESSION['cart']);
+
+//var_dump($_SESSION['cart']);
 
 //$productC->gettotal();
 ?>
@@ -246,7 +246,7 @@ ulfate, Iron Sulfate, Manganese Sulfate, Copper Sulfate, Calcium Iodate], Guar G
 
 </div>
 <div class="row text-center">
-<a class="btn btn-rose btn-round" href="shoppingcart.php">Add to Cart &nbsp;<i class="material-icons">shopping_cart</i></a>
+<a class="btn btn-rose btn-round" href="shoppingcart.php?id=<?php echo $_GET['id'];?>">Add to Cart &nbsp;<i class="material-icons">shopping_cart</i></a>
 </div>
 </div>
 <br>

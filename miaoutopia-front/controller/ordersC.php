@@ -48,28 +48,29 @@ class OrdersC
         }
     }
 
-    function addorders($orders)
-    {
-        $sql = "INSERT INTO orders 
-        VALUES (NULL, :ln, :fn, :ad, :d, :q)";
-        $db = config::getConnexion();
+    function addorders($idArray,$quantityArray,$id_cust)
+    {/* VALUES (NULL, :ln, :fn, :ad, :d, :q),:id_customer";*/
+        $sql = "INSERT INTO orders VALUES ";
+
+     for ($i=0; $i <count($idArray) ; $i++) { 
+        $newString = '(NULL,'.$idArray[$i].',(SELECT PRICE FROM PRODUCT WHERE ID='.$idArray[$i].')*'.$quantityArray[$i].',\'processing\',CURRENT_DATE(),'.$quantityArray[$i].','.$id_cust.'),' ;
+        $sql .= $newString ; 
+       }
+       
+
+       $modifiedString = substr($sql, 0, -1);
+       //var_dump($modifiedString) ; 
+       $db = config::getConnexion();
         try {
             
-            $query = $db->prepare($sql);
-            $query->execute([
-                'ln' => $orders->getproduct_id(),
-                 'fn' => $orders->gettotal_amount(),
-                 'ad' => $orders->getstatus(),
-                 'd'=>$orders->getorder_date(),
-                 'q'=>$orders->getquantite()
-                
-            ]);
+            $query = $db->prepare($modifiedString);
+            $query->execute();
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
 
-    function updateorders($orders, $id)
+    /*function updateorders($orders, $id)
     {  $db = config::getConnexion();
         $query = $db->prepare(
             'UPDATE orders SET 
@@ -95,7 +96,7 @@ class OrdersC
         } catch (PDOException $e) {
             $e->getMessage();
         }
-    }
+    }*/
 
     function showorders($id)
     {
