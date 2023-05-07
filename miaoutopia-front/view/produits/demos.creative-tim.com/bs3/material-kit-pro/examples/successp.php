@@ -57,7 +57,7 @@ $_SESSION['cart'] = array();
                                         <img class="img-fluid" src="https://vetra.laborasyon.com/assets/svg/congratulations.svg" alt="...">
                                     </div>
                                 </div>
-                                <a href="../../../../../../email.php" class="btn btn-primary" >Continue</a>
+                                <a href="../../../../../../email.php?amount=<?php echo $_GET['amount']?>&email=<?php echo $_GET['email']?>" class="btn btn-primary" >Continue</a>
                             </div>
                         </div>
                     </div>

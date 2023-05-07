@@ -15,17 +15,19 @@
     $token_card_type = $_POST["stripeTokenType"];
     $phone           = "phone";
     $email           = "stripeEmail";
+
     $address         = "address";
-    $amount          = $_POST['finalPrice']; 
+    $amount          = $_POST['final']; 
     $desc            = $_POST["name"];
+    $em=$_POST["stripeEmail"];
     $charge = \Stripe\Charge::create([
       "amount" => str_replace(",","",$amount) * 100,
       "currency" => 'usd',
       "description"=>$desc,
       "source"=> $token,
     ]);
-
+ 
     if($charge){
-      header("Location:successp.php?amount=$amount");
+      header("Location:successp.php?amount=$amount&email=$em");
     }
 ?>

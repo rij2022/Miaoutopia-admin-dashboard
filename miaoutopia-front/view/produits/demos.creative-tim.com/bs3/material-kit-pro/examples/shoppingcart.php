@@ -5,9 +5,13 @@ session_start();
 if(empty($_SESSION['cart'])){
   $_SESSION['cart']=array();
 }
-array_push($_SESSION['cart'],$_GET['id']);
-$whereIN = implode(',', $_SESSION['cart']);
+  
+  array_push($_SESSION['cart'],$_GET['id']);
+  $whereIN = implode(',', $_SESSION['cart']);
 $list = $productC->listcart($whereIN);
+
+
+
 $isOdd = true;
 
 
@@ -252,12 +256,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   
   <div class="subtotal cf">
     <ul>
-      <li class="totalRow"><span class="label">Subtotal</span><span class="value" id="finalPrice">dt35.00</span></li>
+      <li class="totalRow"><span class="label">Subtotal</span><span class="value" id="finalPrice">0dt</span></li>
       
-          <li class="totalRow"><span class="label">Shipping</span><span class="value">dt5.00</span></li>
+          <li class="totalRow"><span class="label">Shipping</span><span class="value">5.00dt</span></li>
       
-            <li class="totalRow"><span class="label">Tax</span><span class="value">dt4.00</span></li>
-            <li class="totalRow final"><span class="label">Total</span><span class="value" >dt44.00</span></li>
+            <li class="totalRow"><span class="label">Tax</span><span class="value">4.00dt</span></li>
+            <li class="totalRow final"><span class="label">Total</span><span class="value" id="final">0dt</span></li>
       <li class="totalRow"><a class="btn continue" id="refreshTotal" >Final Price</a></li>
     
     </ul>
@@ -278,6 +282,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <form action="checkout-charge.php" method="POST">
 <input style="display:none;" type="text" name="name" value="<?php echo $product['name'];?>">
 <input style="display:none;" type="number" name="finalPrice" id="pricebeforePay" value="13">
+<input style="display:none;" type="number" name="final" id="pricebefore" value="13">
 <input style="display:none;" type="number" name="qt" id="qtbeforePay" value="0">
 <input style="display:none;" type="hidden" name="idTable" id="idTable">
 <input style="display:none;" type="hidden" name="quantityTable" id="quantityTable">
@@ -306,11 +311,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      const unitPrice =priceElem.nextElementSibling.innerHTML
 
      const newTotal =parseFloat(unitPrice) *qt;
+     console.log(newTotal);
      document.getElementById('qtbeforePay').value = qt
 
      QuantityArray[index] = qt ;
-     console.log(QuantityArray) ;
-     console.log(idArrays) ;
+   
 
  
      var idJson = JSON.stringify(idArrays) ;
@@ -329,26 +334,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       // Update the total price element
       const totalElem = event.target.parentElement.nextElementSibling.parentElement.nextElementSibling;
       totalElem.textContent =newTotal;
-
+      
+    
 
     });
   });
 document.getElementById('refreshTotal').addEventListener('click',()=>{
+
     const finalPriceElement = document.getElementById('finalPrice')
         const allPrices = document.querySelectorAll('.aswem')
         allPrices.forEach((price) => {
-            priceShih +=parseFloat(price.textContent)
-            console.log(priceShih)
+            priceShih +=parseFloat(price.textContent);
+
+            if(priceShih>0)
+            document.getElementsByClassName("stripe-button-el")[0].disabled=false;
+
+            pricefinal=priceShih+9
+            //console.log(priceShih)
 
             
         })
 
         document.getElementById('finalPrice').innerHTML = priceShih
-     
+        document.getElementById('final').innerHTML = pricefinal;
 
         
       document.getElementById('pricebeforePay').value = priceShih
- 
+      document.getElementById('pricebefore').value = pricefinal
 
 
 })
@@ -359,13 +371,19 @@ document.getElementById('refreshTotal').addEventListener('click',()=>{
 <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="pk_test_51N3njIJErzrMoGLppG8km80C7hlLqVcwSVvZAxUGt3bY2QwqrBQoGYmsERoM8eGOfPNPSidwhHRq5gT242aVHrBB00Y8sVsCls"
-                data-amount=<?php echo $_COOKIE['finalPrice'];?>
+                data-amount=<?php echo $_COOKIE['final'];?>
                 data-name="<?php echo "item_name"?>"
                 data-description="<?php echo "item_name"?>"
                 data-image="<?php echo "image"?>"
                 data-currency="inr"
                 data-locale="auto">
-                </script></form>
+
+                </script>
+                </form>
+                <script defer>
+    document.getElementsByClassName("stripe-button-el")[0].disabled=true;
+
+</script>
 
 </body>
 <script src="../assets/js/cart.js" type="text/javascript"></script>

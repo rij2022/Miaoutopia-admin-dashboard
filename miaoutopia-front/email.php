@@ -26,7 +26,7 @@ try {
     //Recipients
     $mail->setFrom('miaoutopia@gmail.com', 'Mailer');
     //$mail->addAddress('joe@example.net', 'Joe User');     //Add a recipient
-    $mail->addAddress('arij.laatigue@esprit.tn');               //Name is optional
+    $mail->addAddress($_GET['email']);               //Name is optional
    // $mail->addReplyTo('info@example.com', 'Information');
     //$mail->addCC('cc@example.com');
     //$mail->addBCC('bcc@example.com');
@@ -43,11 +43,11 @@ try {
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Here is the subject';
+    $mail->Subject = 'Miaoutopia Payment Recieved !';
 
     $mail->msgHTML(file_get_contents('indexMail.html'), __DIR__);
 
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    $mail->AltBody = 'Thank you for Trusting Us';
 
     $mail->send();
     header("Location:./view/produits/demos.creative-tim.com/bs3/material-kit-pro/examples/list-product.php");

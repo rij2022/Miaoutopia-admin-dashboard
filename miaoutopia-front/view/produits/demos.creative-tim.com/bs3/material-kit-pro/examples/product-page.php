@@ -188,7 +188,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="container">
 <div class="row title-row">
 <div class="col-md-4 col-md-offset-8">
-<button class="btn btn-white pull-right"><i class="material-icons">shopping_cart</i> <?php echo count($_SESSION['cart'])?> Items</button>
+<a class="btn btn-warning pull-right" href="shoppingcart.php"><i class="material-icons">shopping_cart</i> <?php echo count($_SESSION['cart'])?> Items</a>
 </div>
 </div>
 </div>
@@ -246,7 +246,7 @@ ulfate, Iron Sulfate, Manganese Sulfate, Copper Sulfate, Calcium Iodate], Guar G
 
 </div>
 <div class="row text-center">
-<a class="btn btn-rose btn-round" href="shoppingcart.php?id=<?php echo $_GET['id'];?>">Add to Cart &nbsp;<i class="material-icons">shopping_cart</i></a>
+<a class="btn btn-warning btn-round" href="shoppingcart.php?id=<?php echo $_GET['id'];?>">Add to Cart &nbsp;<i class="material-icons">shopping_cart</i></a>
 </div>
 </div>
 <br>
