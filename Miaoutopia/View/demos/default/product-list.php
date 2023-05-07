@@ -547,7 +547,7 @@ if (!empty($_GET['q'])) {
                     </div>
                     <div class="collapse show mt-4" id="keywordsCollapseExample">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Phone, Headphone, Shoe ...">
+                            <input type="text" class="form-control" placeholder="shampoo,food ...">
                             <button class="btn btn-outline-light" type="button">
                                 <i class="bi bi-search"></i>
                             </button>

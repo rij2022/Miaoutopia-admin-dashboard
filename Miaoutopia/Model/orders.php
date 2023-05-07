@@ -41,11 +41,11 @@ class Orders
     {
         return $this->product_id;
     }
-    public function getstatus()
+     function getstatus()
     {
         return $this->status;
     }
-    public function setstatus($status)
+     function setstatus($status)
     {
         $this->status = $status;
 

@@ -1,4 +1,11 @@
-
+<?php
+include "../../../Controller/ordersC.php";
+$ordersC= new OrdersC();
+$shipped=$ordersC->shippedCount();
+$json=json_encode($shipped);
+$jsonwithoutString =str_replace(['[', ']'], '', $json);
+var_dump($json);
+?>
 <!doctype html>
 <html lang="en">
 
@@ -8,6 +15,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> Miaoutopia </title>
+    <link href="./assets/styles.css" rel="stylesheet" />
+
+    
+<style>
+  
+    #chart {
+  padding: 0;
+  max-width: 380px;
+  margin: 35px auto;
+}
+
+  
+</style>
+
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.png"/>
@@ -31,6 +52,34 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+        )
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+        )
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+        )
+    </script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+
+    <script>
+      // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+      // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+      var _seed = 42;
+      Math.random = function() {
+        _seed = _seed * 16807 % 2147483647;
+        return (_seed - 1) / 2147483646;
+      };
+    </script>
 </head>
 <body>
 
@@ -734,7 +783,7 @@
     <div class="content ">
         
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col-lg-7 col-md-12">
+        <div class="col-lg-6 col-md-12">
             <div class="card widget h-100">
                 <div class="card-header d-flex">
                     <h6 class="card-title">
@@ -812,7 +861,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-5 col-md-12">
+        <div class="col-lg-6 col-md-12">
             <div class="card widget h-100">
                 <div class="card-header d-flex">
                     <h6 class="card-title">
@@ -834,7 +883,38 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="sales-channels"></div>
+                    <div id="chart">
+                    <script>
+      
+      var options = {
+        series: <?php echo "[$jsonwithoutString]";?>,
+        chart: {
+        width: 380,
+        type: 'pie',
+
+      },
+      labels: ['Shipped', 'Cancelled', 'Processing'],
+      
+     
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }]
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+    
+    
+  </script>
+  </div>
                     <div class="row text-center mb-5 mt-4">
                         <div class="col-4">
                             <div class="display-7">48%</div>

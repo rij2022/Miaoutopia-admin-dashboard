@@ -2,12 +2,10 @@
 include 'C:\xampp\htdocs\Miaoutopia\Controller\ordersC.php';
 $ordersC = new OrdersC();
 
-if (!empty($_GET['q'])) {
-    $searchTerm = $_GET['q'];
-    $list = $ordersC->chercherorder($searchTerm);
-} else {
-    $list= $ordersC->listorders();
-}
+
+   
+    $list = $ordersC->listorders(); //var_dump($list);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -658,18 +656,7 @@ if (!empty($_GET['q'])) {
     </a>
     <!-- ./ Logo -->
     <div class="page-title">Orders</div>
-    <form class="search-form" method="GET">
-        <div class="input-group">
-            <button class="btn btn-outline-light" type="submit" id="button-addon1"  >
-                <i class="bi bi-search"></i>
-</button>
-<input type="text" class="form-control" placeholder="Search..." name="q"
-                   aria-label="Example text with button addon" aria-describedby="button-addon1">
-            <a href="#" class="btn btn-outline-light close-header-search-bar">
-                <i class="bi bi-x"></i>
-            </a>
-        </div>
-    </form>
+    
     </form>
     <div class="header-bar ms-auto">
         <ul class="navbar-nav justify-content-end">
@@ -786,43 +773,51 @@ if (!empty($_GET['q'])) {
     <div class="card">
         <div class="card-body">
             <div class="d-md-flex gap-4 align-items-center">
-                <div class="d-none d-md-flex">All Orders</div>
+                <div class="d-none d-md-flex">show orders with status:</div>
                 <div class="d-md-flex gap-4 align-items-center">
                     <form class="mb-3 mb-md-0">
                         <div class="row g-3">
                             <div class="col-md-3">
-                                <select class="form-select">
-                                    <option>Sort by</option>
-                                    <option value="desc">Desc</option>
-                                    <option value="asc">Asc</option>
+                            <form id="my-form" method="GET" >
+                             
+                                <select class="form-select" name="q" id="my-select" >
+                                    <option selected name="q">processing</option>
+                                    <option >shipped</option>
+                                    <option >cancelled</option>
                                 </select>
+                                </form>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-select">
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                </select>
+                               <button type="submit">show</button>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                    <button class="btn btn-outline-light" type="button">
-                                        <i class="bi bi-search"></i>
-                                    </button>
+                              
+        <div class="input-group">
+            <button class="btn btn-outline-light" id="button-addon1"  >
+                <i class="bi bi-search"></i>
+</button>
+<input type="text" class="form-control place" placeholder="Search..."  id="place"
+                   aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <a href="#" class="btn btn-outline-light close-header-search-bar " id="refresh" >
+                <i class="bi bi-x"></i>
+            </a>
+        </div>
+    </form>
+    <script>
+        
+    </script>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                   
                 </div>
                 <div class="dropdown ms-auto">
                     <a href="#" data-bs-toggle="dropdown"
                        class="btn btn-primary dropdown-toggle"
                        aria-haspopup="true" aria-expanded="false">Actions</a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a href="#" class="dropdown-item">Action</a>
+                        <a type="submit" class="dropdown-item">show</a>
                         <a href="#" class="dropdown-item">Another action</a>
                         <a href="#" class="dropdown-item">Something else here</a>
                     </div>
@@ -848,14 +843,16 @@ if (!empty($_GET['q'])) {
                 <th class="text-end">Actions</th>
             </tr>
             </thead>
-         
+
             <tbody>
             <?php
+        
                     foreach ($list as $orders) {
+                   
                         $p_id=$orders['product_id'];
-                        //var_dump($orders['product_id']); 
 
-               
+                        //var_dump($orders['product_id']); 
+                           
                         ?>
             <tr>
                 <td>
@@ -864,7 +861,7 @@ if (!empty($_GET['q'])) {
                 <td>
                     <a href="#"><?= $orders['id_order']; ?></a>
                 </td>
-                <td><?= $ordersC->getproductName($p_id) ?></td>
+                <td><?php echo $ordersC->getproductName($p_id);?></td>
                 
                 <td><?= $orders['total_amount']; ?></td>
                 <td><?= $orders['order_date']; ?></td>

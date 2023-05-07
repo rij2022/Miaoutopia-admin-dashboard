@@ -93,7 +93,7 @@ class ProductC
         }
     }
     function chercherproduct($searchTerm) {
-        $sql = "SELECT * FROM product WHERE CONCAT_WS(' ', id, name, img, price, stock, description, date) LIKE :searchTerm ;";
+        $sql =" SELECT * FROM product WHERE CONCAT(id, ' ', name, ' ', img, ' ', price, ' ', stock, ' ', description, ' ', date) LIKE :searchTerm";
         $db = config::getConnexion();
         try {
             $stmt = $db->prepare($sql);
@@ -129,59 +129,10 @@ class ProductC
             echo('Error:'.$e->getMessage());
             }
             }
-            function getNumberofOrders1($month)
-        {
-           $sql = "
-           SELECT * FROM orders
-           WHERE YEAR(order_date) = YEAR(CURRENT_DATE)
-           GROUP BY YEAR(order_date), MONTH(order_date)
-        ";  $db = config::getConnexion();
-            try {
-             $stats = $db->query($sql)->fetchAll(PDO::FETCH_NUM);
-             return $stats;
-            } catch (Exception $e) {
-                echo 'Error: ' . $e->getMessage();
-            }
-        }
+        
 
 
-        function getNumberofOrders2($month)
-        {
-           $sql = "
-            SELECT 
-   
-    COUNT(order.date_debut) AS occurrence_count
-FROM 
-    (
-        SELECT 17 AS day_of_month
-        UNION SELECT 18
-        UNION SELECT 19
-        UNION SELECT 20
-        UNION SELECT 21
-        UNION SELECT 22
-        UNION SELECT 23
-        UNION SELECT 24
-        UNION SELECT 25
-        UNION SELECT 26
-        UNION SELECT 27
-        UNION SELECT 28
-        UNION SELECT 29
-        UNION SELECT 30
-        UNION SELECT 31
-
-
-    ) AS calendar
-LEFT JOIN publicite ON DAY(publicite.date_debut) = calendar.day_of_month AND MONTH(publicite.date_debut) = $month
-GROUP BY 
-    calendar.day_of_month;
-        ";  $db = config::getConnexion();
-            try {
-             $stats = $db->query($sql)->fetchAll(PDO::FETCH_NUM);
-             return $stats;
-            } catch (Exception $e) {
-                echo 'Error: ' . $e->getMessage();
-            }
-        }
+       
  
 }
 

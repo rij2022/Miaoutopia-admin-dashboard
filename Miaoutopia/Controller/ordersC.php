@@ -5,6 +5,7 @@ include 'C:\xampp\htdocs\Miaoutopia\Model\orders.php';
 class OrdersC
 {
     public $db ;
+    
     public function listorders()
     {
         $sql = "SELECT * FROM orders";
@@ -69,33 +70,29 @@ class OrdersC
         }
     }
 
-    function updateorders($orders, $id)
-    {  $db = config::getConnexion();
-        $query = $db->prepare(
-            'UPDATE orders SET 
-                 total_amount = :total,
-                status= :status,
-                quantite= :quantite,
-                order_date = :date,
-                product_id= :idp
-            WHERE id_order= :id'
-        );
+    function updateorders($orders, $id) {
+        $db = config::getConnexion();
+        $idp = intval($orders->getproduct_id());
+        $id_order = intval($id);
+        $status=$orders->getstatus();
+        $sql = "update orders set status = '".$status."' where id_order=".$id_order.";";
+
+        ;
+        $query = $db->prepare($sql);
+        $product_id = intval($orders->getproduct_id());
+        $id_order = intval($id);
+       /* $query->bindValue(':status', );
+        $query->bindValue(':id_order', $id_order);
+        $query->bindValue(':idp', $product_id);*/
+        var_dump($product_id);
         try {
-          
-            $query->execute([
-                'total' => $orders->gettotal_amount(),
-                'price' => $orders->getstatus(),
-                'quantite' => $orders->getquantite(),
-                'date'=>$orders->getorder_date(),
-                'idp'=>$orders->getproduct_id(),
-                'id'=>$id
-                //'date' => $orders->getdate()
-            ]);
+            $query->execute();
             echo $query->rowCount() . " records UPDATED successfully <br>";
         } catch (PDOException $e) {
-            $e->getMessage();
+            die('Error: ' . $e->getMessage()); 
         }
     }
+    
 
     function showorders($id)
     {
@@ -114,21 +111,41 @@ class OrdersC
 die('Error: ' . $e->getMessage());
         }
     }
-    function chercherorder($searchTerm) {
-        $sql = "SELECT * FROM orders WHERE CONCAT_WS(' ', id_order, product_id, total_amount, status, order_date, quantite) LIKE :searchTerm ;";
+    function showStatus($searchTerm) {
+        $sql = "SELECT * FROM orders WHERE status like :searchTerm";
+
         $db = config::getConnexion();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':searchTerm', '%'.$searchTerm.'%', PDO::PARAM_STR);
         try {
  
             $stmt->execute();
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = $stmt;
+         //   var_dump($results);
             return $results;
         } catch(PDOException $e) {
             die('Error: ' . $e->getMessage());
         }
    
     
+}
+function shippedCount(){
+   $sql="SELECT COUNT(*) AS count FROM orders WHERE status IN ('shipped', 'cancelled', 'processing') GROUP BY status ORDER BY FIELD(status, 'shipped', 'cancelled', 'processing');";
+   $db = config::getConnexion();
+   $req = $db->prepare($sql);
+ 
+ 
+   try {
+     $req->execute(); 
+
+          $status=$req->fetchAll(PDO::FETCH_NUM);
+     
+       return $status;
+
+   } catch (Exception $e) {
+       die('Error:' . $e->getMessage());
+   }
+
 }
 }
 ?>

@@ -51,7 +51,7 @@
                                
     <label for="validationCustom04" class="form-label"></label>
     <select class="form-select needs-validation " id="validationCustom04" name="status"  required>
-      <option selected  value="status">processing</option>
+      <option selected  name="status">processing</option>
       <option>shipped</option>
       <option>cancelled</option>
     </select>  </div>

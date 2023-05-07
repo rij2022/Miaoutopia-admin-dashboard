@@ -808,14 +808,14 @@ $orders = $ordersC->showorders($_GET['id_order']);
                                     <div class="card card-body">
                                         <h6 class="card-title mb-4">Update order</h6>
                                         <form method="POST" action="order-update.php">
-                                        <input type="number" class="form-control"  name="id-order" value="<?php echo $orders['id_order'];?>"
+                                        <input type="number" class="form-control"  name="id_order" value="<?=  $orders['id_order'];?>"
                                                hidden>
                                                <input type="number" class="form-control"  name="idp" value="<?php echo $orders['product_id'];?>"
                                                hidden> 
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                 <label class="form-label">Pick the date of delivery</label>
-                        <input type="date" style="date_format:yyyy-mm-dd " id="date" class="form-control" name="date-demande" value="<?php echo $orders['order_date']?>">
+                        <input type="date" style="date_format:yyyy-mm-dd " id="date" class="form-control" name="date-demande" value="<?php echo $orders['order_date']?>" >
                                                 </div>
                                                 <div class="col-md-6">
                                                 <label class="form-label">Price</label>
@@ -830,14 +830,14 @@ $orders = $ordersC->showorders($_GET['id_order']);
                                                 <div class="col-md-6">
                                                 <label class="form-label"></label>
                                                     <select class="form-select " name="status">
-                                                        <option selected value="status"><?php echo $orders['status']; ?></option>
+                                                        <option selected name="status">processing</option>
                                                         <option>shipped</option>
                                                         <option>cancelled</option>
                                                     </select>
                                                 </div>
                                             </div>
                                  
-                                       <input class="btn btn-outline-primary" value="update" type="submit" href="order-update.php">
+                                       <input class="btn btn-outline-primary" value="update" type="submit" >
                                        </form> 
                                       </div>
                                 </div>

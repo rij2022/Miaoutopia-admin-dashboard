@@ -388,7 +388,7 @@ $list = $productC->listProduct();
                         <h6 class="card-title mb-3">Add product</h6>
                         <div class="text-muted">Enter your Product information</div>
                     </div>
-                    <form action="verification.php" method="POST" enctype="multipart/form-data" id=>
+                    <form action="verification.php" method="POST" enctype="multipart/form-data" >
                           <div class="row g-4 mb-3">
                         
                     <div class="row g-4 mb-3">

@@ -51,36 +51,36 @@ $orders = $ordersC->showorders($_GET['id_order']);
                                     <img width="120" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
                                 </div>
                                 <div class="my-5 text-center text-lg-start">
-                                    <h1 class="display-8">Update Order</h1>
-                                    <p class="text-muted">You can update your order for </p>
+                                    <h1 class="display-8">Update The Status of the Order</h1>
+                                    <p class="text-muted">You can update your Status for </p>
                                     <h2 class="display-8"><?php echo $_GET['name'] ?></h2>
                                 </div>
                                 <form class="mb-5" action="order-update.php" method="POST">
                                     
                                     <div class="mb-3">
-                                        <input type="number" class="form-control" name="id-order" value="<?php echo $orders['id_order']; ?>" hidden>
-                                        <input type="number" class="form-control" name="idp" value="<?php echo $orders['product_id']; ?>" >
+                                        <input type="number" class="form-control" name="id_order" value="<?=  $orders['id_order']; ?>" hidden>
+                                        <input type="number" class="form-control" name="idp" value="<?=  $orders['product_id']; ?>" hidden>
                                         <label for="validationCustom04" class="form-label"></label>
-                                        <select class="form-select  " id="validationCustom04" >
-                                            <option selected name="status"><?php echo $orders['status']; ?></option>
+                                        <select class="form-select  " id="validationCustom04" name="status" value="status">
+                                            <option selected name="status">processing</option>
                                             <option>shipped</option>
                                             <option>cancelled</option>
-                                            <?php echo $orders['status']; ?>
+                                        
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">quantite</label>
-                                        <input type="number" class="form-control" value="<?php echo $orders['quantite']; ?>" name="quantite" min="0">
+                                        <input type="number" class="form-control" value="<?=  $orders['quantite']; ?>" name="quantite" min="0" readonly>
                                     </div>
                                     <div class="mb-3">
 
                                         <label class="form-label">Price</label>
-                                        <input type="number" class="form-control" name="price" value="<?php echo $orders['total_amount']; ?>">
+                                        <input type="number" class="form-control" name="price" value="<?php echo $orders['total_amount']; ?>" readonly>
                                     </div>
                                     <div class="mb-3">
 
                                         <label class="form-label">Pick the date of delivery</label>
-                                        <input type="date" style="date_format:yyyy-mm-dd " id="date" class="form-control" name="date-demande" value="<?php echo $orders['order_date'] ?>">
+                                        <input type="date" style="date_format:yyyy-mm-dd " id="date" class="form-control" name="date-demande" value="<?php echo $orders['order_date'] ?>" >
 
 
                                     </div>
