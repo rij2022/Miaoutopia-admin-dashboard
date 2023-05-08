@@ -587,9 +587,7 @@ $orders = $ordersC->showorders($_GET['id_order']);
                         <li>
                             <a href="orders.php">List</a>
                         </li>
-                        <li>
-                            <a class="active" href="order-detail.php">Detail</a>
-                        </li>
+                        
                     </ul>
                 </li>
                 <li>

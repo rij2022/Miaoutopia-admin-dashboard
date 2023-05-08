@@ -5,11 +5,13 @@ include 'C:\xampp\htdocs\Miaoutopia\Model\orders.php';
 class OrdersC
 {
     public $db ;
-    
+    public function __construct(){
+        $this->db = config::getConnexion();
+    }
     public function listorders()
     {
         $sql = "SELECT * FROM orders";
-        $this->db = config::getConnexion();
+       
         try {
             $liste = $this->db->query($sql);
             return $liste;
@@ -38,8 +40,8 @@ class OrdersC
     function deleteorders($id)
     {
         $sql = "DELETE FROM orders WHERE id_order = :id";
-        $db = config::getConnexion();
-        $req = $db->prepare($sql);
+    
+        $req = $this->db->prepare($sql);
         $req->bindValue(':id', $id);
 
         try {
@@ -53,10 +55,10 @@ class OrdersC
     {
         $sql = "INSERT INTO orders 
         VALUES (NULL, :ln, :fn, :ad, :d, :q)";
-        $db = config::getConnexion();
+   
         try {
             
-            $query = $db->prepare($sql);
+            $query = $this->db->prepare($sql);
             $query->execute([
                 'ln' => $orders->getproduct_id(),
                  'fn' => $orders->gettotal_amount(),
@@ -71,14 +73,14 @@ class OrdersC
     }
 
     function updateorders($orders, $id) {
-        $db = config::getConnexion();
+       
         $idp = intval($orders->getproduct_id());
         $id_order = intval($id);
         $status=$orders->getstatus();
         $sql = "update orders set status = '".$status."' where id_order=".$id_order.";";
 
         ;
-        $query = $db->prepare($sql);
+        $query = $this->db->prepare($sql);
         $product_id = intval($orders->getproduct_id());
         $id_order = intval($id);
        /* $query->bindValue(':status', );
@@ -98,8 +100,8 @@ class OrdersC
     {
         $sql = "SELECT * from orders where id_order = :id";
         
-        $db = config::getConnexion();
-        $query = $db->prepare($sql);
+ 
+        $query = $this->db->prepare($sql);
         $query->bindValue(':id', $id);
         try {
 
@@ -114,8 +116,8 @@ die('Error: ' . $e->getMessage());
     function showStatus($searchTerm) {
         $sql = "SELECT * FROM orders WHERE status like :searchTerm";
 
-        $db = config::getConnexion();
-        $stmt = $db->prepare($sql);
+  
+        $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':searchTerm', '%'.$searchTerm.'%', PDO::PARAM_STR);
         try {
  
@@ -131,8 +133,8 @@ die('Error: ' . $e->getMessage());
 }
 function shippedCount(){
    $sql="SELECT COUNT(*) AS count FROM orders WHERE status IN ('shipped', 'cancelled', 'processing') GROUP BY status ORDER BY FIELD(status, 'shipped', 'cancelled', 'processing');";
-   $db = config::getConnexion();
-   $req = $db->prepare($sql);
+   
+   $req = $this->db->prepare($sql);
  
  
    try {
@@ -147,6 +149,18 @@ function shippedCount(){
    }
 
 }
+function sumTotalMoney(){
+    $sql = "SELECT SUM(total_amount) AS total_sum FROM orders";
+    $req = $this->db->prepare($sql);
+    try {
+        $req->execute(); 
+        $total_sum = $req->fetchColumn();
+        return $total_sum;
+    } catch (Exception $e) {
+        die('Error: ' . $e->getMessage());
+    }
+}
+
 }
 ?>
   
